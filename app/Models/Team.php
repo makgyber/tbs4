@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Guava\Calendar\Contracts\Resourceable;
-use Guava\Calendar\ValueObjects\CalendarResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
 
-class Team extends Model implements Resourceable
+class Team extends Model
 {
     use HasFactory, LogsActivity;
 
@@ -61,16 +59,6 @@ class Team extends Model implements Resourceable
     public function encoder(): BelongsTo
     {
         return $this->belongsTo(User::class, 'encoder_id', 'id');
-    }
-
-    public function toCalendarResource(): array|CalendarResource
-    {
-        return CalendarResource::make($this->id)
-            ->title($this->code)
-            ->extendedProps([
-                "users" => $this->users->pluck('id')->all()
-            ])
-            ->toCalendarResource();
     }
 
 }

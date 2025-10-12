@@ -18,16 +18,14 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Support\Str;
 use Spatie\Activitylog\LogOptions;
 use Spatie\Activitylog\Traits\LogsActivity;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Str;
 
 #[ObservedBy(ContractObserver::class)]
-class Contract extends Model implements HasMedia
+class Contract extends Model //implements HasMedia
 {
-    use HasFactory, LogsActivity, InteractsWithMedia, HasComments, HasActivityStatusInterval;
+    use HasFactory, LogsActivity,  HasComments, HasActivityStatusInterval;
 
     protected $fillable = [
         'client_id', 'contract_type', 'code', 'engagement', 'scope_of_work',

@@ -7,8 +7,8 @@ use App\Traits\HasComments;
 use Carbon\Carbon;
 use GalleryJsonMedia\JsonMedia\Concerns\InteractWithMedia;
 use GalleryJsonMedia\JsonMedia\Contracts\HasMedia;
-use Guava\Calendar\Contracts\Eventable;
-use Guava\Calendar\ValueObjects\CalendarEvent;
+//use Guava\Calendar\Contracts\Eventable;
+//use Guava\Calendar\ValueObjects\CalendarEvent;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,7 +30,7 @@ use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 
 #[ObservedBy([JobOrderObserver::class])]
-class JobOrder extends Model implements HasMedia, Eventable
+class JobOrder extends Model implements HasMedia //, Eventable
 {
     use HasFactory, HasRelationships, LogsActivity, HasTags, InteractWithMedia, HasComments;
 
@@ -258,13 +258,13 @@ class JobOrder extends Model implements HasMedia, Eventable
         return $this->hasMany(FieldImage::class);
     }
 
-    public function registerMediaConversions(Media $media = null): void
-    {
-        $this
-            ->addMediaConversion('preview')
-            ->fit(Manipulations::FIT_CROP, 300, 300)
-            ->nonQueued();
-    }
+//    public function registerMediaConversions(Media $media = null): void
+//    {
+//        $this
+//            ->addMediaConversion('preview')
+//            ->fit(Manipulations::FIT_CROP, 300, 300)
+//            ->nonQueued();
+//    }
 
     public function assignees(): BelongsToMany
     {
@@ -554,13 +554,13 @@ class JobOrder extends Model implements HasMedia, Eventable
         return $this->hasMany(Arrival::class);
     }
 
-    public function toCalendarEvent(): array|CalendarEvent
-    {
-        return CalendarEvent::make()
-            ->title($this->client ? $this->client->name : $this->code)
-            ->start(Carbon::make($this->target_date)->addHours(8))
-            ->action('edit')
-            ->resourceIds($this->teams->pluck('id')->toArray() + ['unassigned']);
-    }
+//    public function toCalendarEvent(): array|CalendarEvent
+//    {
+//        return CalendarEvent::make()
+//            ->title($this->client ? $this->client->name : $this->code)
+//            ->start(Carbon::make($this->target_date)->addHours(8))
+//            ->action('edit')
+//            ->resourceIds($this->teams->pluck('id')->toArray() + ['unassigned']);
+//    }
 
 }
