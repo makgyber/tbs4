@@ -19,6 +19,7 @@ use Filament\Tables\Table;
 class JobOrderResource extends Resource
 {
     protected static ?string $model = JobOrder::class;
+    protected static bool $shouldRegisterNavigation = false;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
