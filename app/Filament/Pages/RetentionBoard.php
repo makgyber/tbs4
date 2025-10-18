@@ -47,9 +47,10 @@ class RetentionBoard extends BoardPage
                 TextEntry::make('assignedTo.name')
                     ->color(Color::Emerald)
                     ->size('xs')
-                    ->badge()->hiddenLabel(),
+                    ->hiddenLabel(),
                 TextEntry::make('created_at')
                     ->size('xs')
+                    ->alignRight()
                     ->date()->hiddenLabel(),
 
             ])->columns(2))
