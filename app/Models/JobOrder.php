@@ -34,6 +34,13 @@ class JobOrder extends Model implements HasMedia //, Eventable
 {
     use HasFactory, HasRelationships, LogsActivity, HasTags, InteractWithMedia, HasComments;
 
+    const NonTechnicalJobTypes =[
+        "deliver billing", "pick-up check", "deliver letter/report", "meeting", "DAY OFF/WALANG PASOK",
+        "RELEASE/BODEGERO/OFFICE", "DRIVE/HATID", "OFFICE REPAIR (VEHICLE/EQUIPMENT)", "Pick up File",
+        "TRAINING/SEMINAR", "OFFICE WORK", "DELIVER ONLY", "DELIVER RENEWAL LETTER", "DELIVER CONTRACT",
+        "Absent", "entom", "LEAVE"
+    ];
+
     protected $fillable = [
         'code', 'summary', 'target_date', 'completed', 'confirmed', 'client_id', 'target_end',
         'created_by', 'job_order_type', 'address_id', 'signature', 'review', 'service_acknowledgement',
@@ -552,6 +559,15 @@ class JobOrder extends Model implements HasMedia //, Eventable
     public function arrivals(): HasMany
     {
         return $this->hasMany(Arrival::class);
+    }
+
+    public function isTechnical(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                return !in_array($this->job_order_type, self::NonTechnicalJobTypes);
+            }
+        );
     }
 
 //    public function toCalendarEvent(): array|CalendarEvent

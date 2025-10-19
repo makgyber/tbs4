@@ -56,6 +56,8 @@ class RetentionBoard extends BoardPage
                     ->date()->hiddenLabel(),
 
             ])->columns(2))
+            ->filtersFormWidth(Width::FourExtraLarge)
+            ->filtersFormColumns(2)
             ->filters([
                 SelectFilter::make('assignedTo')
                     ->searchable()
