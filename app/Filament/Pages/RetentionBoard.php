@@ -3,11 +3,13 @@
 namespace App\Filament\Pages;
 
 use App\Models\Retention;
+use App\Traits\HasStateTransitions;
 use Filament\Forms\Components\DatePicker;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Pages\Page;
 use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Components\Text;
+use Filament\Schemas\Components\UnorderedList;
 use Filament\Schemas\Schema;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\Width;
@@ -15,6 +17,7 @@ use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Indicator;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Relaticle\Flowforge\Board;
 use Relaticle\Flowforge\BoardPage;
@@ -23,6 +26,8 @@ use Relaticle\Flowforge\Column;
 
 class RetentionBoard extends BoardPage
 {
+    use HasStateTransitions;
+
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-view-columns';
 
     protected static string | \UnitEnum | null $navigationGroup = "Kanban Boards";
@@ -54,6 +59,9 @@ class RetentionBoard extends BoardPage
                     ->size('xs')
                     ->alignRight()
                     ->date()->hiddenLabel(),
+                UnorderedList::make(fn(Model $record)=>[...$this->transitionsListAsText($record)])
+                    ->extraAttributes(['style' => 'columns: 1 !important;'])
+                    ->columnSpanFull()
 
             ])->columns(2))
             ->filtersFormWidth(Width::FourExtraLarge)
@@ -97,5 +105,14 @@ class RetentionBoard extends BoardPage
                     }),
             ]);
 
+    }
+
+    protected function transitionsListAsText(Model $record): array
+    {
+        $list = [];
+        foreach ($this->stateTransitions($record) as $value) {
+            array_push($list, Text::make($value)->size('xs')->color(Color::Cyan));
+        }
+        return $list;
     }
 }

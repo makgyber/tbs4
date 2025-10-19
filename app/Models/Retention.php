@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Enums\RetentionLeadStatus;
 use App\Traits\HasComments;
+use App\Traits\HasStateTransitions;
+use App\Traits\HasStatusTimeline;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,7 +17,7 @@ use Spatie\EloquentSortable\SortableTrait;
 
 class Retention extends Model implements Sortable
 {
-    use HasFactory, SortableTrait, HasComments, LogsActivity;
+    use HasFactory, SortableTrait, HasComments, LogsActivity, HasStatusTimeline;
 
     protected $fillable = [
         'summary', 'client_id', 'terminating_contract_id', 'renewal_contract_id', 'assigned_to', 'order_column',

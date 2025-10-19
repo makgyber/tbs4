@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\AcquisitionLeadStatus;
 use App\Observers\LeadObserver;
 use App\Traits\HasComments;
+use App\Traits\HasStatusTimeline;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -24,7 +25,7 @@ use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 #[ObservedBy([LeadObserver::class])]
 class Lead extends Model implements Sortable
 {
-    use HasFactory, HasTags, HasRelationships, SortableTrait, LogsActivity, HasComments;
+    use HasFactory, HasTags, HasRelationships, SortableTrait, LogsActivity, HasComments, HasStatusTimeline;
 
     protected $fillable = [
         'concerns', 'status', 'client_id', 'assigned_to', 'is_reacquisition',
