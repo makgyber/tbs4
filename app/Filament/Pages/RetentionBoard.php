@@ -25,6 +25,8 @@ class RetentionBoard extends BoardPage
 {
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-view-columns';
 
+    protected static string | \UnitEnum | null $navigationGroup = "Kanban Boards";
+
     public function board(Board $board): Board
     {
         return $board

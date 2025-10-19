@@ -20,11 +20,13 @@ use Illuminate\Support\Carbon;
 use Relaticle\Flowforge\Board;
 use Relaticle\Flowforge\BoardPage;
 use Relaticle\Flowforge\Column;
+use UnitEnum;
 
 
 class AcquisitionBoard extends BoardPage
 {
     protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-view-columns';
+    protected static string | UnitEnum | null $navigationGroup = "Kanban Boards";
 
     public function board(Board $board): Board
     {
