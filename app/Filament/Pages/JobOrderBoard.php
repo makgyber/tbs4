@@ -41,6 +41,7 @@ class JobOrderBoard extends BoardPage
                 Column::make('started')->color('green'),
                 Column::make('completed')->color('grey'),
                 Column::make('cancelled')->color('grey'),
+                Column::make('postponed')->color('grey'),
             ])
             ->searchable(['summary'])
             ->cardSchema(fn(Schema $schema) => $schema        // Rich card content
